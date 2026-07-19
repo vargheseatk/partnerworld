@@ -16,7 +16,7 @@
           <h1 class="display reveal">Build the <span class="gold-text">Perfect<br>Relationship.</span></h1>
           <p class="sub reveal">Create emotionally intelligent AI partners that learn, adapt and grow with you — voice, presence and memory, refined to feel unmistakably real.</p>
           <div class="reveal" style="display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;">
-            <a href="partner.html" class="btn btn-gold">＋ Create New Partner</a>
+            <a href="partner.html" class="btn btn-gold">＋ Subscribe</a>
             <a href="catalogue.html" class="btn btn-ghost">Browse Avatars</a>
           </div>
           <div class="reveal" style="display:flex;gap:34px;margin-top:44px;">
@@ -35,8 +35,8 @@
           <div style="border-radius:16px;overflow:hidden;aspect-ratio:16/12;position:relative;" id="hero-portrait"></div>
           <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:18px;">
             <div>
-              <div class="avatar-name" style="font-size:24px;">Priyamvada <span class="age">Age 24</span></div>
-              <div class="tags">Honest • Loyal • Emotionally Expressive</div>
+              <div class="avatar-name" style="font-size:24px;" id="hero-name"></div>
+              <div class="tags" id="hero-tags"></div>
             </div>
             <span class="chip solid">Best Value</span>
           </div>
@@ -80,7 +80,7 @@
     <section class="section">
       <div class="glass reveal" style="padding:48px;text-align:center;background:linear-gradient(135deg,rgba(245,197,66,0.12),rgba(201,162,39,0.03));border-color:var(--glass-brd-2);">
         <h2 class="title">Your perfect partner is one tap away.</h2>
-        <p class="sub" style="margin:14px auto 0;">Six curated avatars. Infinite personalities. Choose who you fall for.</p>
+        <p class="sub" style="margin:14px auto 0;">Nine curated avatars. Infinite personalities. Choose who you fall for.</p>
         <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
           <a href="catalogue.html" class="btn btn-gold">Browse Avatars</a>
           <a href="dashboard.html" class="btn btn-ghost">View Live Dashboard</a>
@@ -102,5 +102,7 @@
     const priya = AVATARS.find(a => a.id === 'priyamvada');
     document.getElementById('hero-portrait').innerHTML =
       avatarImg(priya, '') + '<div class="overlay" style="background:linear-gradient(to top,rgba(7,7,6,0.6),transparent 60%)"></div>';
+    document.getElementById('hero-name').innerHTML = `${priya.name} <span class="age">Age ${priya.age}</span>`;
+    document.getElementById('hero-tags').textContent = priya.tags.join(' • ');
   });
 </script>

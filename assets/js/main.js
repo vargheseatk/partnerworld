@@ -1,48 +1,79 @@
 /* ============================================================
    PartnerWorld — shared runtime
-   Injects chrome (nav, particles, streaks, notifications),
-   holds avatar data, generates gold silhouette placeholders,
-   and drives cinematic animations.
+   Injects chrome (topbar, sidebar, particles, streaks, notifications,
+   reveal modal), holds avatar data, generates gold silhouette
+   placeholders, and drives cinematic animations.
    ============================================================ */
 
-/* ---------------- Avatar data (single source of truth) ---------------- */
+/* ---------------- Avatar data (single source of truth) ----------------
+   tier: 'premium' | 'modern' | 'economy' — drives catalogue grouping
+   id stays a lowercase English slug (matches avatars/<id>.jpg|png)
+   name is shown in Malayalam script throughout the UI
+--------------------------------------------------------------------- */
 const AVATARS = [
+  // Premium
   {
-    id: 'laila', name: 'Laila', age: 22,
-    tags: ['Sweet', 'Caring', 'Introvert'],
-    price: '2,999', difficulty: 1, badge: null, model: 'Standard',
-    seed: 18
-  },
-  {
-    id: 'priyamvada', name: 'Priyamvada', age: 24,
-    tags: ['Honest', 'Emotionally Expressive', 'Traditional', 'Loyal'],
-    price: '1,499', difficulty: 0, badge: 'Best Value', model: 'Economy+',
-    seed: 42
-  },
-  {
-    id: 'amala', name: 'Amala', age: 27,
-    tags: ['Independent', 'Modern', 'Career Focused'],
-    price: '3,999', difficulty: 3, badge: null, model: 'Premium',
-    seed: 7
-  },
-  {
-    id: 'esther', name: 'Esther', age: 25,
-    tags: ['Confident', 'Romantic', 'Emotional Intelligence'],
-    price: '4,999', difficulty: null, badge: 'Premium', model: 'Premium',
-    seed: 63
-  },
-  {
-    id: 'anna', name: 'Anna', age: 23,
-    tags: ['Funny', 'Chaotic', 'Meme Lover'],
-    price: '2,499', difficulty: 2, badge: null, model: 'Standard',
-    seed: 29
-  },
-  {
-    id: 'riya', name: 'Riya Shibu', age: 24,
+    id: 'riya', name: 'റിയ ഷിബു', age: 24,
     tags: ['Luxury Model'],
     price: '7,999', difficulty: null, badge: 'Elite+', model: 'Elite+',
-    seed: 88
+    seed: 88, tier: 'premium'
+  },
+  {
+    id: 'esther', name: 'എസ്തർ', age: 25,
+    tags: ['Confident', 'Romantic', 'Emotional Intelligence'],
+    price: '5,999', difficulty: null, badge: 'Premium', model: 'Premium',
+    seed: 63, tier: 'premium'
+  },
+  {
+    id: 'meera', name: 'മീര', age: 26,
+    tags: ['Elegant', 'Mysterious', 'Sophisticated'],
+    price: '6,499', difficulty: null, badge: 'Premium', model: 'Premium',
+    seed: 51, tier: 'premium'
+  },
+  // Modern
+  {
+    id: 'amala', name: 'അമല', age: 27,
+    tags: ['Independent', 'Modern', 'Career Focused'],
+    price: '3,999', difficulty: 3, badge: null, model: 'Standard',
+    seed: 7, tier: 'modern'
+  },
+  {
+    id: 'kavya', name: 'കാവ്യ', age: 24,
+    tags: ['Bold', 'Ambitious', 'Trendy'],
+    price: '3,699', difficulty: 3, badge: null, model: 'Standard',
+    seed: 34, tier: 'modern'
+  },
+  {
+    id: 'anna', name: 'ആന്ന', age: 23,
+    tags: ['Funny', 'Chaotic', 'Meme Lover'],
+    price: '3,199', difficulty: 2, badge: null, model: 'Standard',
+    seed: 29, tier: 'modern'
+  },
+  // Economy
+  {
+    id: 'priyamvada', name: 'പ്രിയംവദ', age: 24,
+    tags: ['Honest', 'Emotionally Expressive', 'Traditional', 'Loyal'],
+    price: '1,499', difficulty: 0, badge: 'Best Value', model: 'Economy+',
+    seed: 42, tier: 'economy'
+  },
+  {
+    id: 'laila', name: 'ലൈല', age: 22,
+    tags: ['Sweet', 'Caring', 'Introvert'],
+    price: '2,299', difficulty: 1, badge: null, model: 'Economy+',
+    seed: 18, tier: 'economy'
+  },
+  {
+    id: 'devika', name: 'ദേവിക', age: 23,
+    tags: ['Gentle', 'Homely', 'Devoted'],
+    price: '1,799', difficulty: 1, badge: null, model: 'Economy+',
+    seed: 77, tier: 'economy'
   }
+];
+
+const TIERS = [
+  ['premium', 'Premium'],
+  ['modern', 'Modern'],
+  ['economy', 'Economy']
 ];
 
 /* ---------------- Gold silhouette placeholder (AI-style) ---------------- */
@@ -119,23 +150,32 @@ const LOGO_MARK = `<svg class="mark" viewBox="0 0 40 40" xmlns="http://www.w3.or
 
 /* ---------------- Notifications data ---------------- */
 const NOTIFS = [
-  { t: 'Priyamvada sent you a message.', time: 'Just now' },
-  { t: 'Priyamvada misses you. 💛', time: '3 min ago' },
+  { t: 'പ്രിയംവദ sent you a message.', time: 'Just now' },
+  { t: 'പ്രിയംവദ misses you. 💛', time: '3 min ago' },
   { t: 'Relationship level increased to 96%.', time: '20 min ago' },
   { t: 'Video Call Requested.', time: '1 hr ago' },
   { t: 'Good Morning received.', time: 'Today, 7:02 AM' },
   { t: 'Emotional sync completed for the week.', time: 'Yesterday' }
 ];
 
-/* ---------------- Build chrome ---------------- */
+/* ---------------- Sidebar nav ---------------- */
 const NAV = [
   ['Dashboard', 'dashboard.html'],
-  ['My Partners', 'catalogue.html'],
+  ['Partners', 'catalogue.html'],
   ['Analytics', 'analytics.html'],
   ['Billing', 'billing.html'],
   ['Support', 'support.html']
 ];
 
+const NAV_ICONS = {
+  'Dashboard': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="12" width="8" height="9" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/></svg>',
+  'Partners': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.1-4.4-9.6-8.6C.6 8.6 2.9 5 6.6 5c2.1 0 3.6 1.4 5.4 3.4C13.8 6.4 15.3 5 17.4 5c3.7 0 6 3.6 4.2 7.4C19.1 16.6 12 21 12 21z"/></svg>',
+  'Analytics': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="4" y1="20" x2="4" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="20" y1="20" x2="20" y2="14"/></svg>',
+  'Billing': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
+  'Support': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'
+};
+
+/* ---------------- Build chrome ---------------- */
 function buildChrome() {
   const here = (location.pathname.split('/').pop() || 'index.html');
 
@@ -158,18 +198,14 @@ function buildChrome() {
   }
   document.body.prepend(streaks);
 
-  // nav
-  const nav = document.createElement('nav');
-  nav.className = 'pw-nav';
-  nav.innerHTML = `
+  // fixed top bar — logo + notifications + profile (always visible)
+  const topbar = document.createElement('nav');
+  topbar.className = 'pw-nav';
+  topbar.innerHTML = `
     <a class="pw-logo" href="index.html">
       ${LOGO_MARK}
       <span class="word">Partner<b>World</b></span>
     </a>
-    <div class="pw-menu">
-      ${NAV.map(([label, href]) =>
-        `<a href="${href}" class="${here === href ? 'active' : ''}">${label}</a>`).join('')}
-    </div>
     <div class="pw-nav-right">
       <div class="pw-bell" id="pw-bell" title="Notifications">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
@@ -177,7 +213,23 @@ function buildChrome() {
       </div>
       <div class="pw-avatar-btn" title="User Profile">V</div>
     </div>`;
-  document.body.prepend(nav);
+  document.body.prepend(topbar);
+
+  // fixed left sidebar — stays in place while page content scrolls
+  const sidebar = document.createElement('aside');
+  sidebar.className = 'pw-sidebar';
+  sidebar.innerHTML = `
+    <div class="pw-sidebar-links">
+      ${NAV.map(([label, href]) => `
+        <a href="${href}" class="pw-side-link ${here === href ? 'active' : ''}">
+          ${NAV_ICONS[label]}
+          <span>${label}</span>
+        </a>`).join('')}
+    </div>
+    <div class="pw-sidebar-foot">
+      <div class="ai-mini">✦ AI Prediction Engine<br><span>Live · Model 3.4</span></div>
+    </div>`;
+  document.body.prepend(sidebar);
 
   // notifications panel + backdrop
   const backdrop = document.createElement('div');
@@ -206,6 +258,65 @@ function buildChrome() {
   document.getElementById('pw-bell').addEventListener('click', open);
   document.getElementById('pw-notif-close').addEventListener('click', close);
   backdrop.addEventListener('click', close);
+
+  buildRevealModal();
+}
+
+/* ---------------- Reveal modal: horizontally-spinning portrait popup ---------------- */
+let _revealTimer = null;
+
+function buildRevealModal() {
+  const wrap = document.createElement('div');
+  wrap.className = 'pw-reveal-backdrop';
+  wrap.id = 'pw-reveal-backdrop';
+  wrap.innerHTML = `
+    <div class="pw-reveal-modal">
+      <button class="pw-reveal-close" id="pw-reveal-close" aria-label="Close">✕</button>
+      <div class="pw-reveal-stage">
+        <div class="pw-reveal-ring"></div>
+        <div class="pw-reveal-portrait" id="pw-reveal-portrait"></div>
+      </div>
+      <div class="pw-reveal-name" id="pw-reveal-name"></div>
+      <div class="pw-reveal-status" id="pw-reveal-status">Establishing emotional link…</div>
+    </div>`;
+  document.body.appendChild(wrap);
+  document.getElementById('pw-reveal-close').addEventListener('click', closeRevealModal);
+  wrap.addEventListener('click', (e) => { if (e.target === wrap) closeRevealModal(); });
+}
+
+function openRevealModal(id, dest) {
+  const a = AVATARS.find(x => x.id === id);
+  if (!a) { window.location.href = dest; return; }
+  const portrait = document.getElementById('pw-reveal-portrait');
+  portrait.innerHTML = '';
+  portrait.classList.remove('spin');
+  void portrait.offsetWidth; // restart animation
+  portrait.innerHTML = avatarImg(a);
+  portrait.classList.add('spin');
+  document.getElementById('pw-reveal-name').textContent = a.name;
+  document.getElementById('pw-reveal-status').textContent = 'Establishing emotional link…';
+  document.getElementById('pw-reveal-backdrop').classList.add('open');
+  clearTimeout(_revealTimer);
+  _revealTimer = setTimeout(() => { window.location.href = dest; }, 2000);
+}
+
+function closeRevealModal() {
+  document.getElementById('pw-reveal-backdrop').classList.remove('open');
+  clearTimeout(_revealTimer);
+}
+
+/* ---------------- Collapsible sections (Users panel, etc.) ---------------- */
+function initCollapsibles() {
+  document.querySelectorAll('.collapsible-head').forEach(head => {
+    const body = head.nextElementSibling;
+    if (!body) return;
+    head.addEventListener('click', () => {
+      const isOpen = head.classList.toggle('open');
+      body.classList.toggle('open', isOpen);
+      // measure actual content height so any amount of content expands cleanly
+      body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0px';
+    });
+  });
 }
 
 /* ---------------- Particle field ---------------- */
@@ -297,6 +408,7 @@ function runObservers() {
 document.addEventListener('DOMContentLoaded', () => {
   buildChrome();
   startParticles();
+  initCollapsibles();
   // let injected DOM settle, then observe
   requestAnimationFrame(runObservers);
 });

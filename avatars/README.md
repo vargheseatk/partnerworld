@@ -6,15 +6,21 @@ Until a real photo is added, the site automatically shows an elegant **gold AI-s
 ## Naming convention (must match exactly — all lowercase)
 
 `.jpg` and `.png` are both supported — use whichever you have, no conversion needed.
+Names now display in **Malayalam** on the site; the filename stays the English slug below.
 
-| Character      | Filename (.jpg or .png)        |
-| -------------- | ------------------------------- |
-| Laila          | `laila.jpg` / `laila.png`         |
-| Priyamvada     | `priyamvada.jpg` / `priyamvada.png` |
-| Amala          | `amala.jpg` / `amala.png`         |
-| Esther         | `esther.jpg` / `esther.png`       |
-| Anna           | `anna.jpg` / `anna.png`           |
-| Riya Shibu     | `riya.jpg` / `riya.png`           |
+| Tier    | Display name    | Filename (.jpg or .png)              |
+| ------- | ---------------- | ------------------------------------- |
+| Premium | റിയ ഷിബു (Riya Shibu) | `riya.jpg` / `riya.png`           |
+| Premium | എസ്തർ (Esther)        | `esther.jpg` / `esther.png`       |
+| Premium | മീര (Meera)           | `meera.jpg` / `meera.png` *(new)* |
+| Modern  | അമല (Amala)           | `amala.jpg` / `amala.png`         |
+| Modern  | കാവ്യ (Kavya)          | `kavya.jpg` / `kavya.png` *(new)* |
+| Modern  | ആന്ന (Anna)            | `anna.jpg` / `anna.png`           |
+| Economy | പ്രിയംവദ (Priyamvada)  | `priyamvada.jpg` / `priyamvada.png` |
+| Economy | ലൈല (Laila)           | `laila.jpg` / `laila.png`         |
+| Economy | ദേവിക (Devika)         | `devika.jpg` / `devika.png` *(new)* |
+
+*(new)* rows have no photo yet — they currently show the gold silhouette placeholder.
 
 ## Image guidelines (for the most premium look)
 
