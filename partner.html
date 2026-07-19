@@ -1,0 +1,110 @@
+<meta charset="utf-8">
+<title>Configure Partner — PartnerWorld</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 33C8 24 6 15 12 11c4-3 8 0 8 4 0-4 4-7 8-4 6 4 4 13-8 22z' fill='%23F5C542'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<div class="page">
+  <div class="wrap">
+    <a href="catalogue.html" style="color:var(--muted);text-decoration:none;font-size:14px;">← Back to catalogue</a>
+
+    <section class="section" style="margin-top:20px;">
+      <div style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:44px;align-items:start;">
+
+        <!-- Portrait -->
+        <div class="reveal" style="position:sticky;top:calc(var(--nav-h) + 30px);">
+          <div class="glass" style="padding:0;overflow:hidden;border-radius:var(--radius);">
+            <div style="aspect-ratio:4/5;position:relative;" id="portrait"></div>
+          </div>
+          <div class="ai-predict" style="margin-top:16px;">
+            <div class="ic">✦</div>
+            <div class="txt">
+              <small>AI Prediction</small>
+              <b>Difficulty to fall in love: <span id="fall-diff">0.2</span></b>
+            </div>
+          </div>
+        </div>
+
+        <!-- Config -->
+        <div class="reveal">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <h2 class="title" id="p-name" style="font-size:44px;">Priyamvada</h2>
+            <span class="chip dot online">Available</span>
+          </div>
+
+          <div class="grid grid-4" style="gap:14px;margin-top:22px;">
+            <div class="glass stat-tile" style="padding:16px;"><div class="stat-label">Status</div><div style="color:#7BE38B;font-weight:600;margin-top:6px;">Available</div></div>
+            <div class="glass stat-tile" style="padding:16px;"><div class="stat-label">Model</div><div style="color:var(--white);font-weight:600;margin-top:6px;" id="p-model">Economy+</div></div>
+            <div class="glass stat-tile" style="padding:16px;"><div class="stat-label">Version</div><div style="color:var(--white);font-weight:600;margin-top:6px;">3.4</div></div>
+            <div class="glass stat-tile" style="padding:16px;"><div class="stat-label">Monthly</div><div style="color:var(--white);font-weight:600;margin-top:6px;" id="p-price">₹1,499</div></div>
+          </div>
+
+          <!-- Traits -->
+          <div class="glass" style="padding:28px;margin-top:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
+              <h3 style="font-family:var(--font-head);font-size:22px;color:#fff;font-weight:600;">Emotional Trait Matrix</h3>
+              <span class="chip">Calibrated</span>
+            </div>
+            <div id="traits" style="display:grid;grid-template-columns:1fr 1fr;gap:8px 40px;"></div>
+          </div>
+
+          <!-- Difficulty -->
+          <div class="glass" style="padding:28px;margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+            <div>
+              <div class="stat-label">Relationship Difficulty</div>
+              <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px;">
+                <span class="gold-text" style="font-family:var(--font-head);font-size:54px;font-weight:700;" data-count="0.3" data-decimals="1">0.0</span>
+                <span style="color:var(--muted);font-size:18px;">/ 10</span>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <span class="chip solid" style="font-size:14px;padding:10px 18px;">💛 Easy to Connect</span>
+              <p class="stat-sub" style="margin-top:10px;max-width:220px;">Lowest resistance profile in the catalogue. Bonds form almost immediately.</p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex;gap:14px;margin-top:28px;">
+            <a href="dashboard.html" class="btn btn-gold" style="flex:1;">Create Partner</a>
+            <a href="dashboard.html" class="btn btn-ghost" style="flex:1;">Preview Conversation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      PartnerWorld™ · Configuration Studio · Trait matrix is illustrative
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+const TRAITS = [
+  ['Honesty', 90], ['Care', 80], ['Attachment', 60], ['Possessiveness', 20],
+  ['Patience', 100], ['Humour', 70], ['Romance', 80], ['Jealousy', 10],
+  ['Empathy', 100], ['Conversation Depth', 80]
+];
+document.addEventListener('DOMContentLoaded', () => {
+  // which avatar (defaults to Priyamvada)
+  const id = new URLSearchParams(location.search).get('a') || 'priyamvada';
+  const a = AVATARS.find(x => x.id === id) || AVATARS.find(x => x.id === 'priyamvada');
+  document.getElementById('p-name').textContent = a.name;
+  document.getElementById('p-model').textContent = a.model;
+  document.getElementById('p-price').textContent = '₹' + a.price;
+  document.getElementById('portrait').innerHTML = avatarImg(a) + '<div class="overlay" style="background:linear-gradient(to top,rgba(7,7,6,0.55),transparent 55%)"></div>';
+
+  document.getElementById('traits').innerHTML = TRAITS.map(([n, v]) => `
+    <div class="trait-row">
+      <div class="trait-head"><span class="name">${n}</span><span class="val">${v/10}/10</span></div>
+      <div class="trait-track"><div class="trait-fill" data-fill="${v}"></div></div>
+    </div>`).join('');
+
+  requestAnimationFrame(() => {
+    const io = new IntersectionObserver((es)=>es.forEach(e=>{
+      if(e.isIntersecting){ e.target.style.width = e.target.dataset.fill + '%'; io.unobserve(e.target); }
+    }),{threshold:0.2});
+    document.querySelectorAll('#traits .trait-fill').forEach(el=>io.observe(el));
+  });
+});
+</script>

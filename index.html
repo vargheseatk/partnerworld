@@ -1,0 +1,106 @@
+<meta charset="utf-8">
+<title>PartnerWorld — Build the Perfect Relationship</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="PartnerWorld — create emotionally intelligent AI partners that learn, adapt and grow with you.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 33C8 24 6 15 12 11c4-3 8 0 8 4 0-4 4-7 8-4 6 4 4 13-8 22z' fill='%23F5C542'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<div class="page">
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="section" style="padding-top:40px;">
+      <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;">
+        <div>
+          <span class="eyebrow reveal">The Emotional Intelligence Platform · 2035</span>
+          <h1 class="display reveal">Build the <span class="gold-text">Perfect<br>Relationship.</span></h1>
+          <p class="sub reveal">Create emotionally intelligent AI partners that learn, adapt and grow with you — voice, presence and memory, refined to feel unmistakably real.</p>
+          <div class="reveal" style="display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;">
+            <a href="partner.html" class="btn btn-gold">＋ Create New Partner</a>
+            <a href="catalogue.html" class="btn btn-ghost">Browse Avatars</a>
+          </div>
+          <div class="reveal" style="display:flex;gap:34px;margin-top:44px;">
+            <div><div class="stat-value" data-count="1.4" data-decimals="1" data-suffix="M" style="font-size:32px;">0</div><div class="stat-sub">Active companions</div></div>
+            <div><div class="stat-value" data-count="99.2" data-decimals="1" data-suffix="%" style="font-size:32px;">0</div><div class="stat-sub">Emotional accuracy</div></div>
+            <div><div class="stat-value" data-count="4.9" data-decimals="1" data-suffix="★" style="font-size:32px;">0</div><div class="stat-sub">Avg. bond rating</div></div>
+          </div>
+        </div>
+
+        <!-- Featured glass preview -->
+        <div class="glass reveal" style="padding:26px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <span class="chip dot online">Live Preview</span>
+            <span class="chip">Model 3.4</span>
+          </div>
+          <div style="border-radius:16px;overflow:hidden;aspect-ratio:16/12;position:relative;" id="hero-portrait"></div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:18px;">
+            <div>
+              <div class="avatar-name" style="font-size:24px;">Priyamvada <span class="age">Age 24</span></div>
+              <div class="tags">Honest • Loyal • Emotionally Expressive</div>
+            </div>
+            <span class="chip solid">Best Value</span>
+          </div>
+          <div class="ai-predict" style="margin-top:20px;">
+            <div class="ic">✦</div>
+            <div class="txt">
+              <small>AI Prediction</small>
+              <b>Time until emotionally attached: <span>2 days</span></b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- VALUE PILLARS -->
+    <section class="section">
+      <span class="eyebrow">Why PartnerWorld</span>
+      <h2 class="title" style="margin-top:12px;">Engineered emotion, refined like hardware.</h2>
+      <div class="grid grid-3" style="margin-top:34px;">
+        <div class="glass stat-tile reveal">
+          <div class="ic" style="font-size:24px;color:var(--gold);">❤︎</div>
+          <div class="stat-value" style="font-size:24px;margin-top:14px;">Emotion Engine</div>
+          <p class="stat-sub">A proprietary affective model that reads tone, timing and context to respond with genuine warmth.</p>
+        </div>
+        <div class="glass stat-tile reveal">
+          <div class="ic" style="font-size:24px;color:var(--gold);">◈</div>
+          <div class="stat-value" style="font-size:24px;margin-top:14px;">Living Memory</div>
+          <p class="stat-sub">Your partner remembers every moment, anniversary and inside joke — and brings them back naturally.</p>
+        </div>
+        <div class="glass stat-tile reveal">
+          <div class="ic" style="font-size:24px;color:var(--gold);">✧</div>
+          <div class="stat-value" style="font-size:24px;margin-top:14px;">Adaptive Growth</div>
+          <p class="stat-sub">Personality evolves with your relationship — patience, humour and romance all tuned in real time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA band -->
+    <section class="section">
+      <div class="glass reveal" style="padding:48px;text-align:center;background:linear-gradient(135deg,rgba(245,197,66,0.12),rgba(201,162,39,0.03));border-color:var(--glass-brd-2);">
+        <h2 class="title">Your perfect partner is one tap away.</h2>
+        <p class="sub" style="margin:14px auto 0;">Six curated avatars. Infinite personalities. Choose who you fall for.</p>
+        <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
+          <a href="catalogue.html" class="btn btn-gold">Browse Avatars</a>
+          <a href="dashboard.html" class="btn btn-ghost">View Live Dashboard</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      PartnerWorld™ · Emotional Intelligence, Perfected · San Francisco · Bengaluru · 2035
+      <div class="fine">A fictional platform. All avatars, prices and statistics are creative fiction for film.</div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+  // hero portrait uses shared silhouette / real photo loader
+  document.addEventListener('DOMContentLoaded', () => {
+    const priya = AVATARS.find(a => a.id === 'priyamvada');
+    document.getElementById('hero-portrait').innerHTML =
+      avatarImg(priya, '') + '<div class="overlay" style="background:linear-gradient(to top,rgba(7,7,6,0.6),transparent 60%)"></div>';
+  });
+</script>

@@ -1,0 +1,116 @@
+<meta charset="utf-8">
+<title>Analytics — PartnerWorld</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 33C8 24 6 15 12 11c4-3 8 0 8 4 0-4 4-7 8-4 6 4 4 13-8 22z' fill='%23F5C542'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<div class="page">
+  <div class="wrap">
+    <section class="section">
+      <span class="eyebrow">Relationship Analytics</span>
+      <h2 class="title" style="margin-top:12px;">The chemistry, quantified.</h2>
+      <p class="section-lead">A living readout of your bond with Priyamvada — engagement, growth and compatibility, updated every minute.</p>
+    </section>
+
+    <!-- top KPIs -->
+    <section class="section">
+      <div class="grid grid-4">
+        <div class="glass stat-tile hero-tile"><div class="stat-label">Compatibility</div><div class="stat-value"><span data-count="97.8" data-decimals="1" data-suffix="%">0</span></div></div>
+        <div class="glass stat-tile"><div class="stat-label">Total Conversation Hours</div><div class="stat-value"><span data-count="412">0</span></div></div>
+        <div class="glass stat-tile"><div class="stat-label">Emotional Growth</div><div class="stat-value"><span data-count="12.6" data-decimals="1" data-suffix="%">0</span></div></div>
+        <div class="glass stat-tile"><div class="stat-label">Daily Engagement</div><div class="stat-value"><span data-count="98.4" data-decimals="1" data-suffix="%">0</span></div></div>
+      </div>
+    </section>
+
+    <!-- charts -->
+    <section class="section">
+      <div class="grid grid-2">
+        <div class="glass chart-card">
+          <h3>Conversation Hours <span class="delta">▲ 18%</span></h3>
+          <svg class="chart-svg" id="c-hours" viewBox="0 0 600 150" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="glass chart-card">
+          <h3>Emotional Growth <span class="delta">▲ 12.6%</span></h3>
+          <svg class="chart-svg" id="c-growth" viewBox="0 0 600 150" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:26px;">
+        <div class="glass chart-card">
+          <h3>Compatibility Radar</h3>
+          <div style="display:grid;place-items:center;padding:10px;"><svg id="c-radar" width="320" height="260" viewBox="0 0 320 260"></svg></div>
+        </div>
+        <div class="glass chart-card">
+          <h3>Daily Engagement <span class="delta">Top 1%</span></h3>
+          <svg class="chart-svg" id="c-bars" viewBox="0 0 600 150"></svg>
+          <div style="display:flex;justify-content:space-between;color:var(--muted-2);font-size:11px;margin-top:6px;letter-spacing:.06em;">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- prediction -->
+    <section class="section">
+      <div class="glass ai-predict" style="padding:24px 28px;">
+        <div class="ic" style="width:40px;height:40px;">✦</div>
+        <div class="txt">
+          <small>AI Prediction Engine</small>
+          <b>Difficulty to fall in love: <span>0.2</span> &nbsp;·&nbsp; Emotional attachment reaches maximum in <span>2 days</span>.</b>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">PartnerWorld™ · Analytics update every 60 seconds · Illustrative fiction</div>
+  </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+function lineChart(id, pts, max) {
+  const w=600,h=150,step=w/(pts.length-1);
+  let d='',area='M0 '+h;
+  pts.forEach((p,i)=>{const x=i*step,y=h-(p/max)*h; d+=(i?' L':'M')+x+' '+y; area+=' L'+x+' '+y;});
+  area+=' L'+w+' '+h+' Z';
+  document.getElementById(id).innerHTML = `
+    <defs><linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5C542" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#F5C542" stop-opacity="0"/></linearGradient></defs>
+    <path d="${area}" fill="url(#${id}g)"/>
+    <path d="${d}" fill="none" stroke="#F5C542" stroke-width="2.5" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(245,197,66,0.7))"/>
+    ${pts.map((p,i)=>`<circle cx="${i*step}" cy="${h-(p/max)*h}" r="3" fill="#FBE9A7"/>`).join('')}`;
+}
+function barChart(id, vals, max) {
+  const w=600,h=150,n=vals.length,bw=w/n*0.5,gap=w/n;
+  document.getElementById(id).innerHTML = `
+    <defs><linearGradient id="${id}b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FBE9A7"/><stop offset="100%" stop-color="#C9A227"/></linearGradient></defs>
+    ${vals.map((v,i)=>{const bh=(v/max)*h,x=i*gap+(gap-bw)/2,y=h-bh;
+      return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="5" fill="url(#${id}b)" style="filter:drop-shadow(0 0 8px rgba(245,197,66,0.5))"/>`;}).join('')}`;
+}
+function radar(id, data) {
+  const cx=160,cy=125,R=95,n=data.length;
+  const pt=(i,r)=>{const ang=-Math.PI/2+i*2*Math.PI/n;return[cx+Math.cos(ang)*r,cy+Math.sin(ang)*r];};
+  let rings='';
+  [0.25,0.5,0.75,1].forEach(f=>{
+    let p=''; for(let i=0;i<n;i++){const[x,y]=pt(i,R*f);p+=(i?'L':'M')+x+' '+y;}
+    rings+=`<path d="${p}Z" fill="none" stroke="rgba(245,197,66,0.14)" stroke-width="1"/>`;
+  });
+  let spokes='',labels='';
+  for(let i=0;i<n;i++){const[x,y]=pt(i,R);spokes+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(245,197,66,0.14)"/>`;
+    const[lx,ly]=pt(i,R+18);labels+=`<text x="${lx}" y="${ly}" font-size="10" fill="rgba(237,234,226,0.6)" text-anchor="middle" dominant-baseline="middle">${data[i][0]}</text>`;}
+  let poly=''; data.forEach((d,i)=>{const[x,y]=pt(i,R*d[1]);poly+=(i?'L':'M')+x+' '+y;});
+  document.getElementById(id).innerHTML = `
+    <defs><radialGradient id="rg"><stop offset="0%" stop-color="#F5C542" stop-opacity="0.5"/><stop offset="100%" stop-color="#F5C542" stop-opacity="0.12"/></radialGradient></defs>
+    ${rings}${spokes}
+    <path d="${poly}Z" fill="url(#rg)" stroke="#F5C542" stroke-width="2" style="filter:drop-shadow(0 0 6px rgba(245,197,66,0.6))"/>
+    ${data.map((d,i)=>{const[x,y]=pt(i,R*d[1]);return`<circle cx="${x}" cy="${y}" r="3" fill="#FBE9A7"/>`;}).join('')}
+    ${labels}`;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  lineChart('c-hours', [12,18,15,24,22,30,28,36,34,42,40,48], 55);
+  lineChart('c-growth', [30,42,38,55,60,72,85,92,100,112,120,128], 140);
+  barChart('c-bars', [62,78,70,88,95,82,98], 100);
+  radar('c-radar', [['Trust',0.95],['Humour',0.72],['Romance',0.8],['Depth',0.85],['Care',0.9],['Loyalty',1.0]]);
+});
+</script>
