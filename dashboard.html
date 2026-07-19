@@ -129,22 +129,24 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const priya = AVATARS.find(a => a.id === 'priyamvada');
-  document.getElementById('dash-portrait').innerHTML = avatarImg(priya);
+  document.getElementById('dash-portrait').innerHTML = avatarImg(priya, 'fill-img');
   document.getElementById('dash-name').innerHTML = `${priya.name} <span class="chip dot online" style="vertical-align:middle;font-size:12px;">Online</span>`;
 
-  // account users
+  // account users — Instagram-story style; drop avatars/sachin.jpg|png and avatars/basil.jpg|png in later
   const sachin = { id: 'sachin', name: 'Sachin', seed: 5 };
   const basil = { id: 'basil', name: 'Basil', seed: 12 };
   document.getElementById('users-list').innerHTML = `
-    <div class="user-chip">
-      <div class="photo">${avatarImg(sachin)}</div>
-      <div class="info"><b>Sachin</b><small>Account owner</small></div>
-      <span class="status-pill active dot">Active</span>
-    </div>
-    <div class="user-chip inactive">
-      <div class="photo">${avatarImg(basil)}</div>
-      <div class="info"><b>Basil</b><small>Invited member</small></div>
-      <span class="status-pill inactive">Inactive</span>
+    <div class="story-row">
+      <div class="story-item">
+        <div class="story-ring"><div class="story-photo">${avatarImg(sachin, 'fill-img')}</div></div>
+        <div class="story-name">Sachin</div>
+        <span class="status-pill active">Active</span>
+      </div>
+      <div class="story-item inactive">
+        <div class="story-ring inactive"><div class="story-photo">${avatarImg(basil, 'fill-img')}</div></div>
+        <div class="story-name">Basil</div>
+        <span class="status-pill inactive">Inactive</span>
+      </div>
     </div>`;
 
   // sparkline

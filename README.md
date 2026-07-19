@@ -9,7 +9,7 @@ A cinematic web app interface for a **fictional** luxury AI-companion SaaS platf
 | Page | File | What it shows |
 | --- | --- | --- |
 | Landing | `index.html` | Hero, floating gold particles, live preview |
-| Partners | `catalogue.html` | 9 companions across Premium / Modern / Economy tiers |
+| Partners | `catalogue.html` | 12 companions across Premium+ / Premium / Modern / Economy tiers |
 | Configure Partner | `partner.html` | Trait matrix + difficulty 0.3/10 |
 | Dashboard | `dashboard.html` | Subscription/token meter, account users, live stats, mood |
 | Analytics | `analytics.html` | Golden glowing graphs & radar |

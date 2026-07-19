@@ -11,6 +11,25 @@
    name is shown in Malayalam script throughout the UI
 --------------------------------------------------------------------- */
 const AVATARS = [
+  // Premium+
+  {
+    id: 'shanthamma', name: 'ശാന്തമ്മ', age: 29,
+    tags: ['Graceful', 'Old-world Charm', 'Nurturing'],
+    price: '9,999', difficulty: null, badge: 'Premium+', model: 'Premium+',
+    seed: 91, tier: 'premium-plus'
+  },
+  {
+    id: 'vasanthi', name: 'വസന്തി', age: 26,
+    tags: ['Vibrant', 'Artistic', 'Passionate'],
+    price: '10,999', difficulty: null, badge: 'Premium+', model: 'Premium+',
+    seed: 45, tier: 'premium-plus'
+  },
+  {
+    id: 'veda', name: 'വേദ', age: 25,
+    tags: ['Intellectual', 'Calm', 'Visionary'],
+    price: '11,999', difficulty: null, badge: 'Premium+', model: 'Premium+',
+    seed: 60, tier: 'premium-plus'
+  },
   // Premium
   {
     id: 'riya', name: 'റിയ ഷിബു', age: 24,
@@ -49,28 +68,29 @@ const AVATARS = [
     price: '3,199', difficulty: 2, badge: null, model: 'Standard',
     seed: 29, tier: 'modern'
   },
-  // Economy
-  {
-    id: 'priyamvada', name: 'പ്രിയംവദ', age: 24,
-    tags: ['Honest', 'Emotionally Expressive', 'Traditional', 'Loyal'],
-    price: '1,499', difficulty: 0, badge: 'Best Value', model: 'Economy+',
-    seed: 42, tier: 'economy'
-  },
+  // Economy — all same price, Priyamvada last
   {
     id: 'laila', name: 'ലൈല', age: 22,
     tags: ['Sweet', 'Caring', 'Introvert'],
-    price: '2,299', difficulty: 1, badge: null, model: 'Economy+',
+    price: '1,999', difficulty: 1, badge: null, model: 'Economy+',
     seed: 18, tier: 'economy'
   },
   {
     id: 'devika', name: 'ദേവിക', age: 23,
     tags: ['Gentle', 'Homely', 'Devoted'],
-    price: '1,799', difficulty: 1, badge: null, model: 'Economy+',
+    price: '1,999', difficulty: 1, badge: null, model: 'Economy+',
     seed: 77, tier: 'economy'
+  },
+  {
+    id: 'priyamvada', name: 'പ്രിയംവദ', age: 24,
+    tags: ['Honest', 'Emotionally Expressive', 'Traditional', 'Loyal'],
+    price: '1,999', difficulty: 0, badge: 'Best Value', model: 'Economy+',
+    seed: 42, tier: 'economy'
   }
 ];
 
 const TIERS = [
+  ['premium-plus', 'Premium+'],
   ['premium', 'Premium'],
   ['modern', 'Modern'],
   ['economy', 'Economy']

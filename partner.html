@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('p-name').textContent = a.name;
   document.getElementById('p-model').textContent = a.model;
   document.getElementById('p-price').textContent = '₹' + a.price;
-  document.getElementById('portrait').innerHTML = avatarImg(a) + '<div class="overlay" style="background:linear-gradient(to top,rgba(7,7,6,0.55),transparent 55%)"></div>';
+  document.getElementById('portrait').innerHTML = avatarImg(a, 'fill-img') + '<div class="overlay" style="background:linear-gradient(to top,rgba(7,7,6,0.55),transparent 55%)"></div>';
 
   document.getElementById('traits').innerHTML = TRAITS.map(([n, v]) => `
     <div class="trait-row">

@@ -87,7 +87,7 @@ body::before {
 /* ---------------- Layout ---------------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
 .page { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 100px; }
-.section { margin-bottom: 64px; }
+.section { margin-bottom: 48px; }
 
 /* ---------------- Nav ---------------- */
 .pw-nav {
@@ -250,7 +250,7 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
   transition: transform .4s cubic-bezier(.2,.7,.3,1), box-shadow .4s, border-color .4s;
 }
 .avatar-card:hover { transform: translateY(-8px); border-color: var(--glass-brd-2); box-shadow: var(--glow-strong); }
-.avatar-portrait { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #0B0A08; }
+.avatar-portrait { position: relative; aspect-ratio: 3/2; overflow: hidden; background: #0B0A08; }
 .avatar-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
 .avatar-card:hover .avatar-portrait img { transform: scale(1.05); }
 .avatar-portrait .overlay {
@@ -260,16 +260,19 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 .avatar-portrait .flag {
   position: absolute; top: 14px; right: 14px; z-index: 2;
 }
-.avatar-body { padding: 20px 22px 22px; }
-.avatar-name { font-family: var(--font-head); font-size: 25px; font-weight: 600; color: var(--white); display: flex; align-items: baseline; gap: 10px; }
-.avatar-name .age { font-family: var(--font-body); font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: 0.05em; }
-.tags { color: var(--champagne); font-size: 13px; margin-top: 8px; font-weight: 400; letter-spacing: 0.02em; line-height: 1.5; }
-.avatar-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(245,197,66,0.12); }
-.price { font-family: var(--font-head); font-size: 22px; color: var(--white); font-weight: 600; }
+.avatar-body { padding: 15px 18px 16px; }
+.avatar-name { font-family: var(--font-head); font-size: 20px; font-weight: 600; color: var(--white); display: flex; align-items: baseline; gap: 10px; }
+.avatar-name .age { font-family: var(--font-body); font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: 0.05em; }
+.tags { color: var(--champagne); font-size: 12.5px; margin-top: 6px; font-weight: 400; letter-spacing: 0.02em; line-height: 1.4; }
+.avatar-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(245,197,66,0.12); }
+.price { font-family: var(--font-head); font-size: 19px; color: var(--white); font-weight: 600; }
 .price small { font-family: var(--font-body); font-size: 12px; color: var(--muted); font-weight: 400; }
 .diff-label { font-size: 11px; color: var(--muted-2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; text-align: right; }
-.avatar-actions { display: flex; gap: 8px; margin-top: 18px; }
+.avatar-actions { display: flex; gap: 8px; margin-top: 13px; }
 .avatar-actions .btn { flex: 1; }
+
+/* fills any placeholder container with a properly-cropped photo */
+.fill-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ---------------- Trait bars ---------------- */
 .trait-row { margin-bottom: 16px; }
@@ -385,7 +388,7 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 }
 
 /* ---------------- Tier headings (catalogue sections) ---------------- */
-.tier-heading { display: flex; align-items: baseline; gap: 18px; margin: 58px 0 28px; }
+.tier-heading { display: flex; align-items: baseline; gap: 18px; margin: 42px 0 22px; }
 .tier-heading:first-of-type { margin-top: 8px; }
 .tier-heading h3 { font-family: var(--font-head); font-size: clamp(26px, 2.6vw, 34px); color: var(--white); font-weight: 600; white-space: nowrap; }
 .tier-heading .count { font-size: 11.5px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
@@ -398,19 +401,24 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 .collapsible-body { max-height: 0; overflow: hidden; transition: max-height .45s cubic-bezier(.2,.7,.3,1); }
 .collapsible-body.open { max-height: 500px; }
 
-/* ---------------- User chips (account members) ---------------- */
-.user-chip { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; background: var(--glass); border: 1px solid var(--glass-brd); margin-top: 12px; transition: opacity .3s ease; }
-.user-chip .photo { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(245,197,66,0.5); flex: none; }
-.user-chip .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.user-chip .info { flex: 1; }
-.user-chip .info b { display: block; color: var(--white); font-size: 14.5px; font-weight: 600; }
-.user-chip .info small { color: var(--muted); font-size: 12px; }
-.user-chip.inactive { opacity: 0.5; filter: grayscale(0.9); }
-.user-chip.inactive .photo { border-color: rgba(255,255,255,0.18); }
+/* ---------------- Account users — Instagram-story style tray ---------------- */
+.story-row { display: flex; gap: 28px; flex-wrap: wrap; padding: 4px 2px 2px; }
+.story-item { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 96px; text-align: center; }
+.story-ring {
+  width: 92px; height: 92px; border-radius: 50%; padding: 3px;
+  background: var(--gold-grad); display: grid; place-items: center; flex: none;
+}
+.story-ring.inactive { background: rgba(255,255,255,0.14); }
+.story-photo {
+  width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+  border: 3px solid var(--bg); background: #0B0A08;
+}
+.story-item.inactive .story-photo img { filter: grayscale(1); opacity: 0.55; }
+.story-name { font-size: 13.5px; font-weight: 600; color: var(--white); }
+.story-item.inactive .story-name { color: var(--muted); }
 .status-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px; }
 .status-pill.active { color: #7BE38B; background: rgba(123,227,139,0.12); border: 1px solid rgba(123,227,139,0.32); }
 .status-pill.inactive { color: var(--muted-2); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
-.status-pill.dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 6px currentColor; }
 
 /* ---------------- Subscription / token usage bar ---------------- */
 .sub-bar { display: flex; align-items: center; gap: 40px; padding: 26px 30px; flex-wrap: wrap; }

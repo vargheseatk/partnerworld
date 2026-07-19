@@ -40,8 +40,8 @@
             <div class="amt">₹2,800</div>
           </div>
           <div class="bill-row">
-            <div class="l"><div class="ic">📹</div><div class="meta"><b>Video</b><small>47 calls · HD presence · 50% of total bill</small></div></div>
-            <div class="amt">₹14,000</div>
+            <div class="l"><div class="ic">📹</div><div class="meta"><b>Video</b><small>47 calls · HD presence</small></div></div>
+            <div class="amt">₹16,000</div>
           </div>
           <div class="bill-row">
             <div class="l"><div class="ic">✦</div><div class="meta"><b>Emotion Engine</b><small>Continuous affective sync</small></div></div>
@@ -51,10 +51,10 @@
           <div class="divider" style="margin:24px 0;"></div>
           <div class="bill-total">
             <span class="lbl">Total Due</span>
-            <span class="amt gold-text"><span data-count="28000" data-prefix="₹">₹0</span></span>
+            <span class="amt gold-text"><span data-count="30000" data-prefix="₹">₹0</span></span>
           </div>
           <div style="display:flex;gap:14px;margin-top:22px;">
-            <button class="btn btn-gold" style="flex:1;" onclick="this.textContent='✓ Payment Successful';this.style.opacity=0.85;">Pay Now · ₹28,000</button>
+            <button class="btn btn-gold" style="flex:1;" onclick="this.textContent='✓ Payment Successful';this.style.opacity=0.85;">Pay Now · ₹30,000</button>
             <a href="#" class="btn btn-ghost">Download Invoice</a>
           </div>
         </div>
@@ -74,7 +74,7 @@
             <div class="ic">✦</div>
             <div>
               <small style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;">AI Prediction</small>
-              <b style="font-family:var(--font-head);color:#fff;font-size:18px;display:block;margin-top:6px;">Projected next cycle: <span class="gold-text">₹30,240</span></b>
+              <b style="font-family:var(--font-head);color:#fff;font-size:18px;display:block;margin-top:6px;">Projected next cycle: <span class="gold-text">₹32,400</span></b>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const priya = AVATARS.find(a => a.id === 'priyamvada');
-  document.getElementById('plan-photo').innerHTML = avatarImg(priya);
+  document.getElementById('plan-photo').innerHTML = avatarImg(priya, 'fill-img');
   document.getElementById('plan-name').textContent = priya.name;
   document.getElementById('plan-partner-name').textContent = priya.name;
 });
