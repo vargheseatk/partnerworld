@@ -96,7 +96,7 @@ function silhouette(name, seed = 0) {
 function avatarImg(a, cls = '') {
   const ph = silhouette(a.name, a.seed).replace(/"/g, '&quot;');
   return `<img class="${cls}" alt="${a.name}" src="avatars/${a.id}.jpg"
-    onerror="this.onerror=null;this.src='${ph}';">`;
+    onerror="if(!this.dataset.step){this.dataset.step='1';this.src='avatars/${a.id}.png';}else{this.onerror=null;this.src='${ph}';}">`;
 }
 
 function starRow(n) {
