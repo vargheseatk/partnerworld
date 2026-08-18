@@ -10,17 +10,18 @@ Names now display in **Malayalam** on the site; the filename stays the English s
 
 | Tier      | Display name    | Filename (.jpg or .png)              |
 | --------- | ---------------- | ------------------------------------- |
-| Premium+  | ശാന്തമ്മ (Shanthamma) | `shanthamma.jpg` / `shanthamma.png` *(new)* |
-| Premium+  | വസന്തി (Vasanthi)     | `vasanthi.jpg` / `vasanthi.png` *(new)*     |
-| Premium+  | വേദ (Veda)            | `veda.jpg` / `veda.png` *(new)*             |
+| Premium+  | ശാന്തമ്മ (Shanthamma) | `shanthamma.jpg` / `shanthamma.png` |
+| Premium+  | വസന്തി (Vasanthi)     | `vasanthi.jpg` / `vasanthi.png`     |
+| Premium+  | വേദ (Veda)            | `veda.jpg` / `veda.png`             |
 | Premium   | റിയ ഷിബു (Riya Shibu) | `riya.jpg` / `riya.png`           |
 | Premium   | എസ്തർ (Esther)        | `esther.jpg` / `esther.png`       |
-| Premium   | മീര (Meera)           | `meera.jpg` / `meera.png` *(new)* |
+| Premium   | മീര (Meera)           | `meera.jpg` / `meera.png`         |
 | Modern    | അമല (Amala)           | `amala.jpg` / `amala.png`         |
-| Modern    | കാവ്യ (Kavya)          | `kavya.jpg` / `kavya.png` *(new)* |
+| Modern    | കാവ്യ (Kavya)          | `kavya.jpg` / `kavya.png`         |
 | Modern    | ആന്ന (Anna)            | `anna.jpg` / `anna.png`           |
+| Modern    | അഞ്ജലി (Anjaly)        | `anjaly.jpg` / `anjaly.png` *(new)* |
 | Economy   | ലൈല (Laila)           | `laila.jpg` / `laila.png`         |
-| Economy   | ദേവിക (Devika)         | `devika.jpg` / `devika.png` *(new)* |
+| Economy   | ദേവിക (Devika)         | `devika.jpg` / `devika.png`       |
 | Economy   | പ്രിയംവദ (Priyamvada)  | `priyamvada.jpg` / `priyamvada.png` |
 
 *(new)* rows have no photo yet — they currently show the gold silhouette placeholder.

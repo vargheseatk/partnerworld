@@ -469,6 +469,43 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 .pw-reveal-name { margin-top: 26px; font-family: var(--font-head); font-size: 27px; color: var(--white); font-weight: 600; letter-spacing: 0.01em; }
 .pw-reveal-status { margin-top: 8px; font-size: 12.5px; color: var(--champagne); letter-spacing: 0.1em; text-transform: uppercase; }
 
+/* ---------------- Export Snippets: actor grid ---------------- */
+.export-tile {
+  border-radius: var(--radius); overflow: hidden; cursor: pointer; position: relative;
+  background: var(--glass); border: 1px solid var(--glass-brd);
+  transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s, border-color .3s;
+}
+.export-tile:hover { transform: translateY(-6px); border-color: var(--glass-brd-2); box-shadow: var(--glow-strong); }
+.export-tile.selected { border-color: var(--gold); box-shadow: var(--glow-strong); }
+.export-tile .avatar-portrait { aspect-ratio: 1/1; }
+.export-tile .export-tile-body { padding: 14px 16px 16px; }
+.export-tile .export-tile-name { font-family: var(--font-head); font-size: 18px; font-weight: 600; color: var(--white); }
+.export-tile .export-tile-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+/* ---------------- Export Snippets: right-side overlay panel ---------------- */
+.pw-export-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 250; opacity: 0; pointer-events: none; transition: opacity .4s; }
+.pw-export-backdrop.open { opacity: 1; pointer-events: auto; }
+.pw-export-panel {
+  position: fixed; top: 0; right: 0; height: 100vh; width: 460px; max-width: 92vw;
+  background: rgba(11,10,8,0.9); backdrop-filter: blur(30px) saturate(140%);
+  -webkit-backdrop-filter: blur(30px) saturate(140%);
+  border-left: 1px solid var(--glass-brd);
+  z-index: 251; transform: translateX(100%); transition: transform .45s cubic-bezier(.2,.8,.2,1);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.pw-export-panel.open { transform: translateX(0); box-shadow: -30px 0 80px rgba(0,0,0,0.6); }
+.pw-export-head { padding: 24px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+.pw-export-head h3 { font-family: var(--font-head); font-size: 20px; color: var(--white); font-weight: 600; }
+.pw-export-head .close { cursor: pointer; color: var(--muted); background: none; border: none; font-size: 22px; }
+.pw-export-preview { margin: 20px 24px 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-brd-2); box-shadow: var(--glow); aspect-ratio: 4/5; position: relative; background: #0B0A08; }
+.pw-export-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pw-export-info { padding: 20px 24px 4px; }
+.pw-export-info .name { font-family: var(--font-head); font-size: 26px; color: var(--white); font-weight: 600; }
+.pw-export-info .tags { color: var(--champagne); font-size: 13px; margin-top: 6px; }
+.pw-export-info .meta-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(245,197,66,0.12); }
+.pw-export-actions { padding: 18px 24px 26px; display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.pw-export-status { font-size: 12px; color: var(--muted); text-align: center; min-height: 16px; }
+
 /* selection */
 ::selection { background: rgba(245,197,66,0.3); color: #fff; }
 ::-webkit-scrollbar { width: 10px; }

@@ -9,12 +9,13 @@ A cinematic web app interface for a **fictional** luxury AI-companion SaaS platf
 | Page | File | What it shows |
 | --- | --- | --- |
 | Landing | `index.html` | Hero, floating gold particles, live preview |
-| Partners | `catalogue.html` | 12 companions across Premium+ / Premium / Modern / Economy tiers |
+| Partners | `catalogue.html` | 13 companions across Premium+ / Premium / Modern / Economy tiers |
 | Configure Partner | `partner.html` | Trait matrix + difficulty 0.3/10 |
 | Dashboard | `dashboard.html` | Subscription/token meter, account users, live stats, mood |
 | Analytics | `analytics.html` | Golden glowing graphs & radar |
-| Billing | `billing.html` | Itemised usage (base fee, video = 50% of total) + Pay Now |
+| Billing | `billing.html` | Itemised usage (base fee, video, emotion engine) + Pay Now |
 | Support | `support.html` | Concierge & FAQ |
+| Export Snippets | `export.html` | Pick a partner, preview slides in on the right, download a high-res 1000×1250 PNG card |
 
 A fixed **left sidebar** and **top bar** stay in place while the page content scrolls. A slide-in **golden notifications panel** is available on every page (bell icon, top right). Clicking a partner card opens a **spinning reveal popup** before continuing.
 

@@ -68,6 +68,12 @@ const AVATARS = [
     price: '3,199', difficulty: 2, badge: null, model: 'Standard',
     seed: 29, tier: 'modern'
   },
+  {
+    id: 'anjaly', name: 'അഞ്ജലി', age: 25,
+    tags: ['Warm', 'Devoted', 'Cheerful'],
+    price: '3,299', difficulty: 2, badge: null, model: 'Standard',
+    seed: 73, tier: 'modern'
+  },
   // Economy — all same price, Priyamvada last
   {
     id: 'laila', name: 'ലൈല', age: 22,
@@ -184,7 +190,8 @@ const NAV = [
   ['Partners', 'catalogue.html'],
   ['Analytics', 'analytics.html'],
   ['Billing', 'billing.html'],
-  ['Support', 'support.html']
+  ['Support', 'support.html'],
+  ['Export Snippets', 'export.html']
 ];
 
 const NAV_ICONS = {
@@ -192,7 +199,8 @@ const NAV_ICONS = {
   'Partners': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.1-4.4-9.6-8.6C.6 8.6 2.9 5 6.6 5c2.1 0 3.6 1.4 5.4 3.4C13.8 6.4 15.3 5 17.4 5c3.7 0 6 3.6 4.2 7.4C19.1 16.6 12 21 12 21z"/></svg>',
   'Analytics': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="4" y1="20" x2="4" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="20" y1="20" x2="20" y2="14"/></svg>',
   'Billing': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2.5"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
-  'Support': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'
+  'Support': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+  'Export Snippets': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>'
 };
 
 /* ---------------- Build chrome ---------------- */
@@ -323,6 +331,115 @@ function openRevealModal(id, dest) {
 function closeRevealModal() {
   document.getElementById('pw-reveal-backdrop').classList.remove('open');
   clearTimeout(_revealTimer);
+}
+
+/* ---------------- High-quality avatar card export (canvas) ---------------- */
+function roundRectPath(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function drawCoverImage(ctx, img, dx, dy, dw, dh) {
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const srcRatio = iw / ih, dstRatio = dw / dh;
+  let sx, sy, sw, sh;
+  if (srcRatio > dstRatio) { sh = ih; sw = ih * dstRatio; sy = 0; sx = (iw - sw) / 2; }
+  else { sw = iw; sh = iw / dstRatio; sx = 0; sy = (ih - sh) / 2; }
+  ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+}
+
+async function generateAvatarCardBlob(avatar, imgEl) {
+  await document.fonts.ready;
+  const W = 1000, H = 1250, R = 34;
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // base + frame
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#14120c'); bg.addColorStop(1, '#070706');
+  ctx.fillStyle = bg;
+  roundRectPath(ctx, 0, 0, W, H, R);
+  ctx.fill();
+
+  // photo (top ~68%)
+  const photoH = Math.round(H * 0.68);
+  ctx.save();
+  roundRectPath(ctx, 0, 0, W, photoH + R, R);
+  ctx.clip();
+  drawCoverImage(ctx, imgEl, 0, 0, W, photoH + R);
+  const fade = ctx.createLinearGradient(0, photoH - 220, 0, photoH + R);
+  fade.addColorStop(0, 'rgba(7,7,6,0)'); fade.addColorStop(1, 'rgba(7,7,6,0.98)');
+  ctx.fillStyle = fade;
+  ctx.fillRect(0, photoH - 220, W, 220 + R);
+  ctx.restore();
+
+  // bottom panel divider
+  ctx.strokeStyle = 'rgba(245,197,66,0.35)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(56, photoH + 14); ctx.lineTo(W - 56, photoH + 14); ctx.stroke();
+
+  // tier / badge chip (top-right over photo)
+  const badgeText = avatar.badge || (avatar.tier ? avatar.tier.replace('-', '+ ').replace(/^./, c => c.toUpperCase()) : '');
+  if (badgeText) {
+    ctx.font = '600 26px Inter, sans-serif';
+    const tw = ctx.measureText(badgeText).width;
+    const bx = W - 48 - tw - 40, by = 40, bw = tw + 40, bh = 52;
+    const goldGrad = ctx.createLinearGradient(bx, by, bx + bw, by + bh);
+    goldGrad.addColorStop(0, '#FBE9A7'); goldGrad.addColorStop(0.5, '#F5C542'); goldGrad.addColorStop(1, '#C9A227');
+    ctx.fillStyle = goldGrad;
+    roundRectPath(ctx, bx, by, bw, bh, bh / 2);
+    ctx.fill();
+    ctx.fillStyle = '#0B0A08';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(badgeText, bx + 20, by + bh / 2 + 1);
+  }
+
+  // name (Malayalam-capable font stack)
+  const nameGrad = ctx.createLinearGradient(56, 0, 560, 0);
+  nameGrad.addColorStop(0, '#FBE9A7'); nameGrad.addColorStop(0.5, '#F5C542'); nameGrad.addColorStop(1, '#C9A227');
+  ctx.fillStyle = nameGrad;
+  ctx.font = "600 68px 'Playfair Display','Noto Sans Malayalam',Georgia,serif";
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(avatar.name, 56, photoH + 100);
+
+  // age chip next to name
+  ctx.font = "400 26px Inter, sans-serif";
+  ctx.fillStyle = 'rgba(237,234,226,0.55)';
+  ctx.fillText(`Age ${avatar.age}`, 58, photoH + 138);
+
+  // tags
+  ctx.font = "400 27px Inter, 'Noto Sans Malayalam', sans-serif";
+  ctx.fillStyle = '#E8C76A';
+  ctx.fillText(avatar.tags.join('  •  '), 56, photoH + 182);
+
+  // price (bottom-right)
+  const priceStr = `₹${avatar.price}`;
+  ctx.font = "600 46px 'Playfair Display', serif";
+  ctx.fillStyle = '#FFFFFF';
+  const priceW = ctx.measureText(priceStr).width;
+  ctx.fillText(priceStr, W - 56 - priceW, H - 78);
+  ctx.font = "400 22px Inter, sans-serif";
+  ctx.fillStyle = 'rgba(237,234,226,0.55)';
+  ctx.fillText('/month', W - 56 - priceW, H - 44);
+
+  // watermark
+  ctx.font = "600 24px 'Playfair Display', serif";
+  ctx.fillStyle = 'rgba(245,197,66,0.55)';
+  ctx.fillText('PartnerWorld', 56, H - 50);
+
+  // outer gold border
+  ctx.strokeStyle = 'rgba(245,197,66,0.5)';
+  ctx.lineWidth = 3;
+  roundRectPath(ctx, 3, 3, W - 6, H - 6, R);
+  ctx.stroke();
+
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
 }
 
 /* ---------------- Collapsible sections (Users panel, etc.) ---------------- */
