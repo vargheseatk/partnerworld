@@ -353,43 +353,68 @@ function drawCoverImage(ctx, img, dx, dy, dw, dh) {
   ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
 }
 
+let _logoImagePromise = null;
+function loadLogoImage() {
+  if (!_logoImagePromise) {
+    _logoImagePromise = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(LOGO_MARK.replace('class="mark" ', ''));
+    });
+  }
+  return _logoImagePromise;
+}
+
 async function generateAvatarCardBlob(avatar, imgEl) {
   await document.fonts.ready;
-  const W = 1000, H = 1250, R = 34;
+  const logoImg = await loadLogoImage().catch(() => null);
+
+  const W = 1000, H = 1400, R = 34;
+  const FRAME_TOP = 100; // room above the card border for the medallion to protrude into
+  const frameH = H - FRAME_TOP;
   const canvas = document.createElement('canvas');
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
 
-  // base + frame
-  const bg = ctx.createLinearGradient(0, 0, 0, H);
-  bg.addColorStop(0, '#14120c'); bg.addColorStop(1, '#070706');
+  // full-canvas backdrop (so the area above the frame, where the medallion pokes out, isn't blank)
+  const backdrop = ctx.createLinearGradient(0, 0, 0, H);
+  backdrop.addColorStop(0, '#14120c'); backdrop.addColorStop(1, '#070706');
+  ctx.fillStyle = backdrop;
+  ctx.fillRect(0, 0, W, H);
+
+  // card frame fill
+  const bg = ctx.createLinearGradient(0, FRAME_TOP, 0, H);
+  bg.addColorStop(0, '#181510'); bg.addColorStop(1, '#070706');
   ctx.fillStyle = bg;
-  roundRectPath(ctx, 0, 0, W, H, R);
+  roundRectPath(ctx, 0, FRAME_TOP, W, frameH, R);
   ctx.fill();
 
-  // photo (top ~68%)
-  const photoH = Math.round(H * 0.68);
+  // photo (top ~62% of the frame)
+  const photoH = Math.round(frameH * 0.62);
   ctx.save();
-  roundRectPath(ctx, 0, 0, W, photoH + R, R);
+  roundRectPath(ctx, 0, FRAME_TOP, W, photoH + R, R);
   ctx.clip();
-  drawCoverImage(ctx, imgEl, 0, 0, W, photoH + R);
-  const fade = ctx.createLinearGradient(0, photoH - 220, 0, photoH + R);
+  drawCoverImage(ctx, imgEl, 0, FRAME_TOP, W, photoH + R);
+  const fade = ctx.createLinearGradient(0, FRAME_TOP + photoH - 220, 0, FRAME_TOP + photoH + R);
   fade.addColorStop(0, 'rgba(7,7,6,0)'); fade.addColorStop(1, 'rgba(7,7,6,0.98)');
   ctx.fillStyle = fade;
-  ctx.fillRect(0, photoH - 220, W, 220 + R);
+  ctx.fillRect(0, FRAME_TOP + photoH - 220, W, 220 + R);
   ctx.restore();
+
+  const panelTop = FRAME_TOP + photoH;
 
   // bottom panel divider
   ctx.strokeStyle = 'rgba(245,197,66,0.35)';
   ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(56, photoH + 14); ctx.lineTo(W - 56, photoH + 14); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(56, panelTop + 14); ctx.lineTo(W - 56, panelTop + 14); ctx.stroke();
 
   // tier / badge chip (top-right over photo)
   const badgeText = avatar.badge || (avatar.tier ? avatar.tier.replace('-', '+ ').replace(/^./, c => c.toUpperCase()) : '');
   if (badgeText) {
     ctx.font = '600 26px Inter, sans-serif';
     const tw = ctx.measureText(badgeText).width;
-    const bx = W - 48 - tw - 40, by = 40, bw = tw + 40, bh = 52;
+    const bx = W - 48 - tw - 40, by = FRAME_TOP + 40, bw = tw + 40, bh = 52;
     const goldGrad = ctx.createLinearGradient(bx, by, bx + bw, by + bh);
     goldGrad.addColorStop(0, '#FBE9A7'); goldGrad.addColorStop(0.5, '#F5C542'); goldGrad.addColorStop(1, '#C9A227');
     ctx.fillStyle = goldGrad;
@@ -406,38 +431,60 @@ async function generateAvatarCardBlob(avatar, imgEl) {
   ctx.fillStyle = nameGrad;
   ctx.font = "600 68px 'Playfair Display','Noto Sans Malayalam',Georgia,serif";
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText(avatar.name, 56, photoH + 100);
+  ctx.fillText(avatar.name, 56, panelTop + 100);
 
   // age chip next to name
   ctx.font = "400 26px Inter, sans-serif";
   ctx.fillStyle = 'rgba(237,234,226,0.55)';
-  ctx.fillText(`Age ${avatar.age}`, 58, photoH + 138);
+  ctx.fillText(`Age ${avatar.age}`, 58, panelTop + 138);
 
   // tags
   ctx.font = "400 27px Inter, 'Noto Sans Malayalam', sans-serif";
   ctx.fillStyle = '#E8C76A';
-  ctx.fillText(avatar.tags.join('  •  '), 56, photoH + 182);
+  ctx.fillText(avatar.tags.join('  •  '), 56, panelTop + 182);
 
-  // price (bottom-right)
+  // price (bottom-right, larger)
   const priceStr = `₹${avatar.price}`;
-  ctx.font = "600 46px 'Playfair Display', serif";
+  ctx.font = "700 62px 'Playfair Display', serif";
   ctx.fillStyle = '#FFFFFF';
   const priceW = ctx.measureText(priceStr).width;
-  ctx.fillText(priceStr, W - 56 - priceW, H - 78);
-  ctx.font = "400 22px Inter, sans-serif";
+  ctx.fillText(priceStr, W - 56 - priceW, H - 86);
+  ctx.font = "400 26px Inter, sans-serif";
   ctx.fillStyle = 'rgba(237,234,226,0.55)';
-  ctx.fillText('/month', W - 56 - priceW, H - 44);
+  ctx.fillText('/month', W - 56 - priceW, H - 46);
 
   // watermark
   ctx.font = "600 24px 'Playfair Display', serif";
   ctx.fillStyle = 'rgba(245,197,66,0.55)';
   ctx.fillText('PartnerWorld', 56, H - 50);
 
-  // outer gold border
+  // outer gold border (frame only, not the full canvas)
   ctx.strokeStyle = 'rgba(245,197,66,0.5)';
   ctx.lineWidth = 3;
-  roundRectPath(ctx, 3, 3, W - 6, H - 6, R);
+  roundRectPath(ctx, 3, FRAME_TOP + 3, W - 6, frameH - 6, R);
   ctx.stroke();
+
+  // logo medallion straddling the top edge — 40% inside the frame, 60% protruding above it
+  const D = 118;
+  const cx = W / 2, cy = FRAME_TOP - D * 0.1; // places the border line 60% down from the medallion's top
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.55)';
+  ctx.shadowBlur = 18;
+  ctx.shadowOffsetY = 6;
+  const medalGrad = ctx.createLinearGradient(cx - D / 2, cy - D / 2, cx + D / 2, cy + D / 2);
+  medalGrad.addColorStop(0, '#1b1710'); medalGrad.addColorStop(1, '#0B0A08');
+  ctx.fillStyle = medalGrad;
+  ctx.beginPath(); ctx.arc(cx, cy, D / 2, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'rgba(245,197,66,0.75)';
+  ctx.beginPath(); ctx.arc(cx, cy, D / 2, 0, Math.PI * 2); ctx.stroke();
+
+  if (logoImg) {
+    const logoSize = D * 0.62;
+    ctx.drawImage(logoImg, cx - logoSize / 2, cy - logoSize / 2, logoSize, logoSize);
+  }
 
   return new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
 }

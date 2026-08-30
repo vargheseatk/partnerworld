@@ -9,19 +9,17 @@
     <section class="section">
       <span class="eyebrow">Export Snippets</span>
       <h2 class="title" style="margin-top:12px;">Grab a high-quality card for any actor.</h2>
-      <p class="section-lead">Select a partner below — a preview opens on the right where you can download a print-ready card as a PNG.</p>
+      <p class="section-lead">Select any partner below — a preview opens on the right where you can download a print-ready card as a PNG.</p>
 
-      <div class="grid grid-3" id="export-grid" style="margin-top:34px;"></div>
+      <div id="export-tiers"></div>
     </section>
 
-    <div class="footer">PartnerWorld™ · Export Snippets · High-resolution 1000×1250px PNG</div>
+    <div class="footer">PartnerWorld™ · Export Snippets · High-resolution 1000×1400px PNG</div>
   </div>
 </div>
 
 <script src="assets/js/main.js"></script>
 <script>
-const EXPORT_IDS = ['anjaly', 'shanthamma', 'priyamvada', 'esther', 'amala'];
-
 let currentAvatar = null;
 let currentImgEl = null;
 
@@ -111,30 +109,40 @@ async function doDownload() {
   }
 }
 
+function tileHtml(a) {
+  return `
+    <div class="export-tile reveal" data-id="${a.id}">
+      <div class="avatar-portrait">
+        ${avatarImg(a)}
+        <div class="overlay"></div>
+      </div>
+      <div class="export-tile-body">
+        <div class="export-tile-name">${a.name}</div>
+        <div class="export-tile-sub">₹${a.price}/month · ${a.badge || a.model}</div>
+      </div>
+    </div>`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   buildExportPanel();
-  const grid = document.getElementById('export-grid');
-  grid.innerHTML = EXPORT_IDS.map(id => {
-    const a = AVATARS.find(x => x.id === id);
-    if (!a) return '';
+  const root = document.getElementById('export-tiers');
+  root.innerHTML = TIERS.map(([key, label]) => {
+    const list = AVATARS.filter(a => a.tier === key);
     return `
-      <div class="export-tile reveal" data-id="${a.id}">
-        <div class="avatar-portrait">
-          ${avatarImg(a)}
-          <div class="overlay"></div>
-        </div>
-        <div class="export-tile-body">
-          <div class="export-tile-name">${a.name}</div>
-          <div class="export-tile-sub">₹${a.price}/month · ${a.badge || a.model}</div>
-        </div>
-      </div>`;
+      <div class="tier-heading">
+        <h3>${label}</h3>
+        <span class="count">${list.length} Partners</span>
+        <span class="line"></span>
+      </div>
+      <div class="grid grid-3">${list.map(tileHtml).join('')}</div>`;
   }).join('');
-  grid.querySelectorAll('.export-tile').forEach(tile => {
+
+  root.querySelectorAll('.export-tile').forEach(tile => {
     tile.addEventListener('click', () => openExportPanel(tile.dataset.id));
   });
   requestAnimationFrame(() => {
     const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
-    grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    root.querySelectorAll('.reveal').forEach(el => io.observe(el));
   });
 });
 </script>
