@@ -497,7 +497,7 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 .pw-export-head { padding: 24px 24px 0; display: flex; align-items: center; justify-content: space-between; }
 .pw-export-head h3 { font-family: var(--font-head); font-size: 20px; color: var(--white); font-weight: 600; }
 .pw-export-head .close { cursor: pointer; color: var(--muted); background: none; border: none; font-size: 22px; }
-.pw-export-preview { margin: 20px 24px 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-brd-2); box-shadow: var(--glow); aspect-ratio: 5/7; position: relative; background: #0B0A08; }
+.pw-export-preview { margin: 20px 24px 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-brd-2); box-shadow: var(--glow); aspect-ratio: 900/1380; position: relative; background: #0B0A08; }
 .pw-export-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .pw-export-info { padding: 20px 24px 4px; }
 .pw-export-info .name { font-family: var(--font-head); font-size: 26px; color: var(--white); font-weight: 600; }
