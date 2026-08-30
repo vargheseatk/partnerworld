@@ -19,16 +19,17 @@ Names now display in **Malayalam** on the site; the filename stays the English s
 | Modern    | അമല (Amala)           | `amala.jpg` / `amala.png`         |
 | Modern    | കാവ്യ (Kavya)          | `kavya.jpg` / `kavya.png`         |
 | Modern    | ആന്ന (Anna)            | `anna.jpg` / `anna.png`           |
-| Modern    | അഞ്ജലി (Anjaly)        | `anjaly.jpg` / `anjaly.png` *(new)* |
 | Economy   | ലൈല (Laila)           | `laila.jpg` / `laila.png`         |
 | Economy   | ദേവിക (Devika)         | `devika.jpg` / `devika.png`       |
 | Economy   | പ്രിയംവദ (Priyamvada)  | `priyamvada.jpg` / `priyamvada.png` |
 
-*(new)* rows have no photo yet — they currently show the gold silhouette placeholder.
-
 ### Dashboard account users (Sachin & Basil)
 
 The dashboard's "Users" panel also uses this same jpg → png → silhouette fallback. Drop in `sachin.jpg`/`sachin.png` and `basil.jpg`/`basil.png` whenever you have real photos and they'll appear automatically in the story-style circles — no code changes needed.
+
+### Video portrait (partner-video.html)
+
+[`partner-video.html`](../partner-video.html) is a duplicate of the Configure Partner page that plays a **video** in the portrait frame instead of a still photo — e.g. `partner-video.html?a=priyamvada`. It looks for `avatars/<id>.mp4` first, then `avatars/<Id>.mp4` (capitalized first letter — GitHub Pages is case-sensitive, so this exact casing matters), then falls back to the normal still-image chain if no video exists. Priyamvada's is already in place as `Priyamvada.mp4`. The video autoplays muted and loops, matching the site's ambient "live" feel.
 
 ## Image guidelines (for the most premium look)
 

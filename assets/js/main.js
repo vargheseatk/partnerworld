@@ -68,12 +68,6 @@ const AVATARS = [
     price: '3,199', difficulty: 2, badge: null, model: 'Standard',
     seed: 29, tier: 'modern'
   },
-  {
-    id: 'anjaly', name: 'അഞ്ജലി', age: 25,
-    tags: ['Warm', 'Devoted', 'Cheerful'],
-    price: '3,299', difficulty: 2, badge: null, model: 'Standard',
-    seed: 73, tier: 'modern'
-  },
   // Economy — all same price, Priyamvada last
   {
     id: 'laila', name: 'ലൈല', age: 22,
@@ -154,6 +148,27 @@ function avatarImg(a, cls = '') {
   const ph = silhouette(a.name, a.seed).replace(/"/g, '&quot;');
   return `<img class="${cls}" alt="${a.name}" src="avatars/${a.id}.jpg"
     onerror="if(!this.dataset.step){this.dataset.step='1';this.src='avatars/${a.id}.png';}else{this.onerror=null;this.src='${ph}';}">`;
+}
+
+/* video element that tries <id>.mp4, then Capitalized.mp4 (e.g. Priyamvada.mp4),
+   then falls back to the normal jpg/png/silhouette still-image chain */
+function avatarVideo(a, cls = '') {
+  const capId = a.id.charAt(0).toUpperCase() + a.id.slice(1);
+  return `<video class="${cls}" autoplay muted loop playsinline
+    data-avatar-id="${a.id}" data-cap="${capId}"
+    src="avatars/${a.id}.mp4" onerror="handleVideoError(this)"></video>`;
+}
+
+function handleVideoError(el) {
+  const a = AVATARS.find(x => x.id === el.dataset.avatarId);
+  if (!el.dataset.step) {
+    el.dataset.step = '1';
+    el.src = `avatars/${el.dataset.cap}.mp4`;
+  } else if (a) {
+    const holder = document.createElement('div');
+    holder.innerHTML = avatarImg(a, el.className);
+    el.replaceWith(holder.firstElementChild);
+  }
 }
 
 function starRow(n) {
