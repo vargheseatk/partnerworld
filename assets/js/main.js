@@ -429,8 +429,13 @@ async function generateAvatarCardBlob(avatar, imgEl) {
   ctx.textBaseline = 'alphabetic';
   ctx.fillText(avatar.name, 56, panelTop + 88);
 
+  // tags — restored to sit directly under the name, as before
+  ctx.font = "400 27px Inter, 'Noto Sans Malayalam', sans-serif";
+  ctx.fillStyle = '#E8C76A';
+  ctx.fillText(avatar.tags.join('  •  '), 56, panelTop + 128);
+
   // Age (left) and price (right), starting on the same line
-  const rowTop = panelTop + 140;
+  const rowTop = panelTop + 185;
   ctx.textBaseline = 'top';
 
   ctx.font = "400 26px Inter, sans-serif";
@@ -448,16 +453,11 @@ async function generateAvatarCardBlob(avatar, imgEl) {
   const perMonthW = ctx.measureText('per month').width;
   ctx.fillText('per month', W - 56 - perMonthW, rowTop + 84);
 
-  // tags — kept close beneath, no dead space
+  // watermark — kept close to the price block, no dead space
   ctx.textBaseline = 'alphabetic';
-  ctx.font = "400 27px Inter, 'Noto Sans Malayalam', sans-serif";
-  ctx.fillStyle = '#E8C76A';
-  ctx.fillText(avatar.tags.join('  •  '), 56, panelTop + 300);
-
-  // watermark — pulled up close to the tags line instead of pinned far below
   ctx.font = "600 24px 'Playfair Display', serif";
   ctx.fillStyle = 'rgba(245,197,66,0.55)';
-  ctx.fillText('PartnerWorld', 56, panelTop + 350);
+  ctx.fillText('PartnerWorld', 56, rowTop + 154);
 
   // outer gold border
   ctx.strokeStyle = 'rgba(245,197,66,0.5)';
