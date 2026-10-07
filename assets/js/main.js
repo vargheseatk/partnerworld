@@ -19,7 +19,7 @@ const AVATARS = [
     seed: 91, tier: 'premium-plus'
   },
   {
-    id: 'vasanthi', name: 'വസന്തി', age: 26,
+    id: 'vasanthi', name: 'വാസന്തി', age: 26,
     tags: ['Vibrant', 'Artistic', 'Passionate'],
     price: '10,999', difficulty: 4, badge: 'Premium+', model: 'Premium+',
     seed: 45, tier: 'premium-plus'
@@ -63,7 +63,7 @@ const AVATARS = [
     seed: 34, tier: 'modern'
   },
   {
-    id: 'anna', name: 'ആന്ന', age: 23,
+    id: 'anna', name: 'അന്ന', age: 23,
     tags: ['Funny', 'Chaotic', 'Meme Lover'],
     price: '3,199', difficulty: 2, badge: null, model: 'Standard',
     seed: 29, tier: 'modern'

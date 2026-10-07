@@ -11,14 +11,14 @@ Names now display in **Malayalam** on the site; the filename stays the English s
 | Tier      | Display name    | Filename (.jpg or .png)              |
 | --------- | ---------------- | ------------------------------------- |
 | Premium+  | ശാന്തമ്മ (Shanthamma) | `shanthamma.jpg` / `shanthamma.png` |
-| Premium+  | വസന്തി (Vasanthi)     | `vasanthi.jpg` / `vasanthi.png`     |
+| Premium+  | വാസന്തി (Vasanthi)     | `vasanthi.jpg` / `vasanthi.png`     |
 | Premium+  | വേദ (Veda)            | `veda.jpg` / `veda.png`             |
 | Premium   | റിയ ഷിബു (Riya Shibu) | `riya.jpg` / `riya.png`           |
 | Premium   | എസ്തർ (Esther)        | `esther.jpg` / `esther.png`       |
 | Premium   | മീര (Meera)           | `meera.jpg` / `meera.png`         |
 | Modern    | അമല (Amala)           | `amala.jpg` / `amala.png`         |
 | Modern    | കാവ്യ (Kavya)          | `kavya.jpg` / `kavya.png`         |
-| Modern    | ആന്ന (Anna)            | `anna.jpg` / `anna.png`           |
+| Modern    | അന്ന (Anna)            | `anna.jpg` / `anna.png`           |
 | Economy   | ലൈല (Laila)           | `laila.jpg` / `laila.png`         |
 | Economy   | ദേവിക (Devika)         | `devika.jpg` / `devika.png`       |
 | Economy   | പ്രിയംവദ (Priyamvada)  | `priyamvada.jpg` / `priyamvada.png` |
