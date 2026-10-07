@@ -68,11 +68,11 @@ const AVATARS = [
     price: '3,199', difficulty: 2, badge: null, model: 'Standard',
     seed: 29, tier: 'modern'
   },
-  // Economy — all same price, Priyamvada last
+  // Economy — Priyamvada last
   {
     id: 'laila', name: 'ലൈല', age: 22,
     tags: ['Sweet', 'Caring', 'Introvert'],
-    price: '1,999', difficulty: 1, badge: null, model: 'Economy+',
+    price: '1,500', difficulty: 1, badge: null, model: 'Economy+',
     seed: 18, tier: 'economy'
   },
   {

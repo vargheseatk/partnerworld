@@ -35,7 +35,6 @@ function cardHtml(a) {
     ? `<div class="diff-label">Tier</div><span class="chip">${a.model}</span>`
     : `<div class="diff-label">Difficulty</div>${starRow(a.difficulty)}`;
   const viewDest = `partner-video.html?a=${a.id}`;
-  const configureDest = `partner.html?a=${a.id}`;
   const selectDest = `dashboard.html`;
   return `
   <div class="avatar-card reveal">
@@ -53,7 +52,6 @@ function cardHtml(a) {
       </div>
       <div class="avatar-actions">
         <a href="${viewDest}" class="btn btn-ghost btn-sm" onclick="openRevealModal('${a.id}','${viewDest}');return false;">View</a>
-        <a href="${configureDest}" class="btn btn-ghost btn-sm" onclick="openRevealModal('${a.id}','${configureDest}');return false;">Configure</a>
         <a href="${selectDest}" class="btn btn-gold btn-sm" onclick="openRevealModal('${a.id}','${selectDest}');return false;">Select</a>
       </div>
     </div>
