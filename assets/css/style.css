@@ -243,6 +243,7 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 
 /* ---------------- Avatar catalogue cards ---------------- */
 .avatar-card {
+  display: flex; flex-direction: column;
   border-radius: var(--radius);
   overflow: hidden; position: relative;
   background: var(--glass); border: 1px solid var(--glass-brd);
@@ -260,11 +261,12 @@ h2.title { font-family: var(--font-head); font-weight: 600; font-size: clamp(30p
 .avatar-portrait .flag {
   position: absolute; top: 14px; right: 14px; z-index: 2;
 }
-.avatar-body { padding: 15px 18px 16px; }
+.avatar-body { padding: 15px 18px 16px; flex: 1; display: flex; flex-direction: column; }
 .avatar-name { font-family: var(--font-head); font-size: 20px; font-weight: 600; color: var(--white); display: flex; align-items: baseline; gap: 10px; }
 .avatar-name .age { font-family: var(--font-body); font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: 0.05em; }
 .tags { color: var(--champagne); font-size: 12.5px; margin-top: 6px; font-weight: 400; letter-spacing: 0.02em; line-height: 1.4; }
-.avatar-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(245,197,66,0.12); }
+.avatar-body .tags { margin-bottom: 12px; }
+.avatar-meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(245,197,66,0.12); }
 .price { font-family: var(--font-head); font-size: 19px; color: var(--white); font-weight: 600; }
 .price small { font-family: var(--font-body); font-size: 12px; color: var(--muted); font-weight: 400; }
 .diff-label { font-size: 11px; color: var(--muted-2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; text-align: right; }

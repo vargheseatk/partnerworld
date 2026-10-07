@@ -31,9 +31,7 @@
 function cardHtml(a) {
   const flag = a.badge
     ? `<span class="chip ${a.badge==='Best Value'||a.badge==='Elite+'?'solid':''}">${a.badge}</span>` : '';
-  const diff = a.difficulty === null
-    ? `<div class="diff-label">Tier</div><span class="chip">${a.model}</span>`
-    : `<div class="diff-label">Difficulty</div>${starRow(a.difficulty)}`;
+  const diff = `<div class="diff-label">Difficulty</div>${starRow(a.difficulty)}`;
   const viewDest = `partner-video.html?a=${a.id}`;
   const selectDest = `dashboard.html`;
   return `

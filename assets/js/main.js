@@ -15,38 +15,38 @@ const AVATARS = [
   {
     id: 'shanthamma', name: 'ശാന്തമ്മ', age: 29,
     tags: ['Graceful', 'Old-world Charm', 'Nurturing'],
-    price: '9,999', difficulty: null, badge: 'Premium+', model: 'Premium+',
+    price: '9,999', difficulty: 3, badge: 'Premium+', model: 'Premium+',
     seed: 91, tier: 'premium-plus'
   },
   {
     id: 'vasanthi', name: 'വസന്തി', age: 26,
     tags: ['Vibrant', 'Artistic', 'Passionate'],
-    price: '10,999', difficulty: null, badge: 'Premium+', model: 'Premium+',
+    price: '10,999', difficulty: 4, badge: 'Premium+', model: 'Premium+',
     seed: 45, tier: 'premium-plus'
   },
   {
     id: 'veda', name: 'വേദ', age: 25,
     tags: ['Intellectual', 'Calm', 'Visionary'],
-    price: '11,999', difficulty: null, badge: 'Premium+', model: 'Premium+',
+    price: '11,999', difficulty: 5, badge: 'Premium+', model: 'Premium+',
     seed: 60, tier: 'premium-plus'
   },
   // Premium
   {
     id: 'riya', name: 'റിയ ഷിബു', age: 24,
     tags: ['Luxury Model'],
-    price: '7,999', difficulty: null, badge: 'Elite+', model: 'Elite+',
+    price: '7,999', difficulty: 5, badge: 'Elite+', model: 'Elite+',
     seed: 88, tier: 'premium'
   },
   {
     id: 'esther', name: 'എസ്തർ', age: 25,
     tags: ['Confident', 'Romantic', 'Emotional Intelligence'],
-    price: '5,999', difficulty: null, badge: 'Premium', model: 'Premium',
+    price: '5,999', difficulty: 4, badge: 'Premium', model: 'Premium',
     seed: 63, tier: 'premium'
   },
   {
     id: 'meera', name: 'മീര', age: 26,
     tags: ['Elegant', 'Mysterious', 'Sophisticated'],
-    price: '6,499', difficulty: null, badge: 'Premium', model: 'Premium',
+    price: '6,499', difficulty: 4, badge: 'Premium', model: 'Premium',
     seed: 51, tier: 'premium'
   },
   // Modern
